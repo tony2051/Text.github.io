@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tony</title>
+  <title>Go 日志 | Tony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tony">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
+  <meta name="description" content="日志使用使用init函数，可以在main函数执行之前对log进行初始化 123456789const (	Ldate         = 1 &amp;lt;&amp;lt; iota     &#x2F;&#x2F;日期示例： 2009&#x2F;01&#x2F;23	Ltime                         &#x2F;&#x2F;时间示例: 01:23:23	Lmicroseconds                 &#x2F;&#x2F;毫秒示例: 01:23:2">
+<meta name="keywords" content="Go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 日志">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;Go-%E6%97%A5%E5%BF%97&#x2F;index.html">
 <meta property="og:site_name" content="Tony">
+<meta property="og:description" content="日志使用使用init函数，可以在main函数执行之前对log进行初始化 123456789const (	Ldate         = 1 &amp;lt;&amp;lt; iota     &#x2F;&#x2F;日期示例： 2009&#x2F;01&#x2F;23	Ltime                         &#x2F;&#x2F;时间示例: 01:23:23	Lmicroseconds                 &#x2F;&#x2F;毫秒示例: 01:23:2">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-29T09:33:35.737Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
@@ -141,130 +145,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Go-解决资源竞争" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Go-日志" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go-%E8%A7%A3%E5%86%B3%E8%B5%84%E6%BA%90%E7%AB%9E%E4%BA%89/">Go 解决资源竞争</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/Go-%E8%A7%A3%E5%86%B3%E8%B5%84%E6%BA%90%E7%AB%9E%E4%BA%89/" class="archive-article-date">
-  	<time datetime="2019-10-29T09:33:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <p><strong>资源竞争</strong>：如果两个或者多个 goruntine 在<code>没有相互同步</code>的情况下，访问某个<code>共享的资源</code>，比如同时对该资源进行读写时，就会处于相互竞争的状态，这就是并发中的资源竞争</p>
-<h4 id="原子函数"><a href="#原子函数" class="headerlink" title="原子函数"></a><strong>原子函数</strong></h4><p>为了<code>保证并发安全</code>，go语言中可以使用<code>原子操作</code>。其执行过程不能被中断，这也就保证了同一时刻一个线程的执行不会被其他线程中断，也保证了多线程下<code>数据操作的一致性</code>。</p>
-<h5 id="sync-atomic包"><a href="#sync-atomic包" class="headerlink" title="sync/atomic包"></a><strong><code>sync/atomic包</code></strong></h5><p>在<code>atomic</code>包中对几种基础类型提供了原子操作，包括<code>int32</code>，<code>int64</code>，<code>uint32</code>，<code>uint64</code>，<code>uintptr</code>，<code>unsafe.Pointer</code>。<br>对于每一种类型，提供了五类原子操作分别是</p>
-<ul>
-<li>Add,增加和减少</li>
-<li>CompareAndSwap，比较并交换</li>
-<li>Swap，交换</li>
-<li>Load，读取</li>
-<li>Store，存储</li>
-</ul>
-<h5 id="Load和Store并发不安全"><a href="#Load和Store并发不安全" class="headerlink" title="Load和Store并发不安全"></a><strong><code>Load和Store并发不安全</code></strong></h5><p><code>Load</code>和<code>Store</code>操作对应与变量的原子性读写，许多变量的读写无法在一个时钟周期内完成，而此时执行可能会被调度到其他线程，无法保证并发安全。<br>Load <u>只保证读取的不是正在写入的值</u>，Store<u>只保证写入是原子操作</u>。</p>
-<h4 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a><strong>互斥锁</strong></h4><p>sync包里提供了一种<code>互斥型的锁</code>，可以让我们自己灵活的控制哪些代码，同时只能有一个goroutine访问，被sync互斥锁控制的这段代码范围，被称之为<code>临界区</code>，临界区的代码，同一时间，只能有一个goroutine访问。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"runtime"</span></span><br><span class="line">	<span class="string">"sync"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	count <span class="keyword">int32</span></span><br><span class="line">	wg    sync.WaitGroup</span><br><span class="line">	mutex sync.Mutex</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	wg.Add(<span class="number">2</span>)</span><br><span class="line">	<span class="keyword">go</span> incCount()</span><br><span class="line">	<span class="keyword">go</span> incCount()</span><br><span class="line">	wg.Wait()</span><br><span class="line">	fmt.Println(count)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">incCount</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">defer</span> wg.Done()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">2</span>; i++ &#123;</span><br><span class="line">		mutex.Lock()</span><br><span class="line">		value := count</span><br><span class="line">		runtime.Gosched()</span><br><span class="line">		value++</span><br><span class="line">		count = value</span><br><span class="line">		mutex.Unlock()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实例中，新声明了一个互斥锁<code>mutex sync.Mutex</code>，这个互斥锁有两个方法，一个是<code>mutex.Lock()</code>,一个是<code>mutex.Unlock()</code>,这两个之间的区域就是临界区，临界区的代码是安全的。我们先调用<code>mutex.Lock()</code>对有竞争资源的代码加锁，这样当一个<code>goroutine</code>进入这个区域的时候，其他<code>goroutine</code>就进不来了，只能等待，一直到调用<code>mutex.Unlock()</code> 释放这个锁为止。</p>
-<h4 id="通道"><a href="#通道" class="headerlink" title="通道"></a><strong>通道</strong></h4><p><strong><em>通道有点像两个 goroutine 之间的管道，一个 goroutine 可以往通道里塞数据，另一个可以从里取数据</em></strong></p>
-<h5 id="声明"><a href="#声明" class="headerlink" title="声明"></a><strong><code>声明</code></strong></h5><p>使用关键字<code>chan</code>和内置函数<code>make</code>进行初始化，第一个参数指定通道中发送和接收数据的<code>类型</code>，第二个参数指定通道的<code>大小</code>,省略时默认为0</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>,<span class="number">0</span>)<span class="comment">// 等价第一个声明</span></span><br><span class="line">ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-<p>通道用于 goroutine 之间的通信，具有发送和接收两个操作，两个操作运算符都是<code>&lt;-</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ch &lt;- <span class="number">2</span> <span class="comment">// 发送数值2给该通道</span></span><br><span class="line">x := &lt;=ch <span class="comment">// 从通道中读取值并赋给x变量</span></span><br><span class="line">&lt;-ch <span class="comment">// 从通道里读取值，并忽略</span></span><br></pre></td></tr></table></figure>
-<p>使用<code>close</code>函数关闭通道,如果一个通道被关闭了，就不能往通道里发送数据了，否自会引起<code>painc</code>异常，但是仍然可以接受数据，若通道内没有数据，则接收到的值为<code>nil</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">close</span>(ch)</span><br></pre></td></tr></table></figure>
-<h5 id="无缓冲通道"><a href="#无缓冲通道" class="headerlink" title="无缓冲通道"></a><strong><code>无缓冲通道</code></strong></h5><p><strong>无缓冲通道</strong>指的是通道的<code>大小为0</code>，这种类型的通道在接收前没有能力保存任何值，要求发送 goroutine 和接收 goroutine 同时准备好才能进行发送和接收操作。如果没有同时准备好的话先执行的操作就会<code>阻塞等待</code>，直到相对应的操作准备好为止，这种无缓冲通道也称之为<code>同步通道</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	ch := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">var</span> sum <span class="keyword">int</span> = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">			sum += i</span><br><span class="line">		&#125;</span><br><span class="line">		ch &lt;- sum</span><br><span class="line">	&#125;()</span><br><span class="line">	</span><br><span class="line">	fmt.Println(&lt;-ch)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在计算<code>sum</code>和的<code>goroutine</code>没有执行完，在把值赋给通道<code>ch</code>前，<code>fmt.Println(&lt;-ch)</code>会一直等待，所以<code>main</code>函数不会终止，只有当前的 <code>goroutine</code> 执行完成将值并发送到<code>ch</code>中后，同时<code>&lt;-ch</code>接收到值后，才会打印出来</p>
-<h5 id="有缓冲通道"><a href="#有缓冲通道" class="headerlink" title="有缓冲通道"></a><strong><code>有缓冲通道</code></strong></h5><p>有缓冲通道其实是一个<code>队列</code>，这个队列最大容量就是我们使用<code>make</code>函数创建是的第二个参数，对于有缓冲的通道，向其发送操作就是向队列的<code>尾部插入元素</code>，接收操作是<code>删除头部元素并返回刚刚删除的元素</code>。<br>当队列满的时候，发送操作就会阻塞；当队列空的时候，接收操作就会阻塞。<br>有缓冲的通道，不要求发送和接收操作时同步的，相反可以<code>解耦发送和接收操作</code>。</p>
-<p><code>cap</code>函数返回通道的最大容量，<code>len</code>函数返回现在通道里有几个元素</p>
-<p>例子：想获取服务端的一个数据，不过这个数据在三个镜像站点上都存在，这三个镜像分散在不同的地理位置，而我们的目的又是想最快的获取到数据。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">mirroredQuery</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">    responses := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>, <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; responses &lt;- request(<span class="string">"asia.gopl.io"</span>) &#125;()</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; responses &lt;- request(<span class="string">"europe.gopl.io"</span>) &#125;()</span><br><span class="line">    <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; responses &lt;- request(<span class="string">"americas.gopl.io"</span>) &#125;()</span><br><span class="line">    <span class="keyword">return</span> &lt;-responses <span class="comment">// return the quickest response</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">request</span><span class="params">(hostname <span class="keyword">string</span>)</span> <span class="params">(response <span class="keyword">string</span>)</span></span> &#123; <span class="comment">/* ... */</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>定义了一个容量为3的通道<code>responses</code>，然后同时发起3个并发goroutine向这三个镜像获取数据，获取到的数据发送到通道<code>responses</code>中，最后我们使用<code>return &lt;-responses</code>返回获取到的第一个数据，也就是最快返回的那个镜像的数据。</p>
-<h5 id="单向通道"><a href="#单向通道" class="headerlink" title="单向通道"></a><strong><code>单向通道</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> send <span class="keyword">chan</span>&lt;- <span class="keyword">int</span> <span class="comment">//只能发送</span></span><br><span class="line"><span class="keyword">var</span> receive &lt;-<span class="keyword">chan</span> <span class="keyword">int</span> <span class="comment">//只能接收</span></span><br></pre></td></tr></table></figure>
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go-%E8%A7%A3%E5%86%B3%E8%B5%84%E6%BA%90%E7%AB%9E%E4%BA%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Go-日志" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go-%E6%97%A5%E5%BF%97/">Go 日志</a>
+    <h1 class="article-title" itemprop="name">
+      Go 日志
     </h1>
   
 
@@ -322,16 +210,84 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go-%E6%97%A5%E5%BF%97/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/29/Go-%E6%97%A5%E5%BF%97/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/10/29/Go-%E8%A7%A3%E5%86%B3%E8%B5%84%E6%BA%90%E7%AB%9E%E4%BA%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Go 解决资源竞争
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/29/Go-%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Go 并发和并行</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -351,595 +307,14 @@
 
 
 
-
   
-    <article id="post-Go-并发和并行" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go-%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C/">Go 并发和并行</a>
-    </h1>
   
 
-        
-        <a href="/2019/10/29/Go-%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C/" class="archive-article-date">
-  	<time datetime="2019-10-29T09:31:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h4 id="并发与并行"><a href="#并发与并行" class="headerlink" title="并发与并行"></a><strong>并发与并行</strong></h4><p><code>并发</code>:两个或者多个事件在<code>同一时间间隔</code>发生，是<code>一台处理器</code>同时处理<code>多个任务</code><br><code>并行</code>:两个或者多个事件在<code>同一时刻</code>发生，是<code>多台处理器</code>同时处理<code>多个任务</code></p>
-<p><strong>并发</strong>在<code>同一时刻只能有一条指令执行</code>，但是多个进程指令被<code>快速轮换执行</code>。在宏观上具有多个进程同时执行效果，但是微观上只是把<code>时间分成若干段</code>，快速<code>交替执行多个进程</code>，并不是同时执行</p>
-<p><strong>并行</strong>在同一时刻有<code>多条指令</code>在<code>多个处理器上同时执行</code>，无论微观还是宏观都是一起执行</p>
-<p>当我们创建一个<code>goroutine</code>的后，会先存放在<code>全局运行队列</code>中，等待Go运行时的调度器进行调度，把他们分配给其中的一个<code>逻辑处理器</code>，并放到这个逻辑处理器对应的<code>本地运行队列</code>中，最终等着被<code>逻辑处理器</code>执行即可。</p>
-<p><strong><em>这一套管理、调度、执行 goroutine 的方式成为 Go 的并发。</em></strong></p>
-<p><strong><em>创建多个<code>逻辑处理器</code>，这样调度器就可以<code>同时分配全局运行队列</code>中的 goroutine 到不同的逻辑处理器上并行执行，这是 Go 的并行</em></strong></p>
-<p>创建一个 <code>goroutine</code> 是通过 <code>go</code> 关键字实现的，在 <code>go</code> 关键字后跟一个函数或者方法即可</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="comment">//设置逻辑处理器个数为1</span></span><br><span class="line">	runtime.GOMAXPROCS(<span class="number">1</span>)</span><br><span class="line">	<span class="keyword">var</span> wg sync.WaitGroup</span><br><span class="line">	wg.Add(<span class="number">2</span>) <span class="comment">// 设置计数器为 2</span></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">defer</span> wg.Done() <span class="comment">// 计数器减 1</span></span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="number">100</span>; i++ &#123;</span><br><span class="line">			<span class="comment">// 增加耗时，当前 goroutine 被扔进全局队列，从局部队列拿其他 goroutine 执行</span></span><br><span class="line">			time.Sleep(time.Second * <span class="number">1</span>)</span><br><span class="line">			fmt.Println(<span class="string">"A:"</span>, i)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">defer</span> wg.Done()</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; <span class="number">100</span>; i++ &#123;</span><br><span class="line">			<span class="comment">// 增加耗时，当前 goroutine 被扔进全局队列，从局部队列拿其他 goroutine 执行</span></span><br><span class="line">			time.Sleep(time.Second * <span class="number">1</span>)</span><br><span class="line">			fmt.Println(<span class="string">"B:"</span>, i)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	wg.Wait() <span class="comment">// 如果计数器大于0，就会阻塞</span></span><br><span class="line">	<span class="comment">//所以 main 函数会等待两个 goroutine 完成后，在结束</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里的<code>sync.WaitGroup</code>其实是一个计数的信号量，<u><em>使用它的目的是要main函数等待两个goroutine执行完成后再结束</em></u>，不然这两个goroutine还在运行的时候，程序就结束了，看不到想要的结果。</p>
-<p><code>runtime.NumCPU()</code> 可以获取本机逻辑CPU个数</p>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go-%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-函数的值传递与指针传递" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/%E5%87%BD%E6%95%B0%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92%E4%B8%8E%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/">函数的值传递与指针传递</a>
-    </h1>
   
 
-        
-        <a href="/2019/10/29/%E5%87%BD%E6%95%B0%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92%E4%B8%8E%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/" class="archive-article-date">
-  	<time datetime="2019-10-29T09:28:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <p>函数参数传递的两种类型：<code>值传递</code>与<code>指针传递</code><br><code>值传递</code>：number,string等类型的值传递给函数参数，函数参数的改变不会影响函数外部的变量<br><code>指针传递</code>：对象和数组类型的变量值传递给函数参数，传递的是指向对象或者数组的地址。改变地址指向的对象或数组内容，函数外部原变量也会改变。</p>
-<p><code>const</code> 保证的是变量<code>指向</code>的<code>内存地址保存的数据</code>不得改动,而不是变量的值不得改动。<br>对于<code>简单类型</code>的数据，如布尔值，字符串，值就保存在变量指向的内存地址，因此等同于<code>常量</code>。<br>对于<code>复合类型</code>的数据(主要是对象和数组)，变量指向的内存地址，保存的只是一个<code>指向实际数据的指针</code>，<code>const</code>只能保证这个指针是固定的，至于它指向的数据结构是不是可变的，就完全不能控制了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = &#123;&#125;</span><br><span class="line">foo.prop = <span class="number">123</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.prop) <span class="comment">// 123</span></span><br><span class="line"></span><br><span class="line">foo = &#123;&#125;; <span class="comment">//TypeError: "foo" is read-only</span></span><br></pre></td></tr></table></figure>
-<p>因此，<code>const</code> 定义的数组或者对象作为参数传入函数中，在函数内部可以修改。</p>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/%E5%87%BD%E6%95%B0%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92%E4%B8%8E%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Hash表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Hash%E8%A1%A8/">Hash表</a>
-    </h1>
   
 
-        
-        <a href="/2019/10/29/Hash%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2019-10-29T02:10:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value在表中的地址 = f(key)</span><br></pre></td></tr></table></figure>
-<p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
-<p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
-<h4 id="Hash表的特点"><a href="#Hash表的特点" class="headerlink" title="Hash表的特点"></a><strong>Hash表的特点</strong></h4><p>数组的特点：寻址容易，插入和删除困难;<br>链表的特点：寻址困难，插入和删除容易;</p>
-<p>Hash表的实现方法之一：<code>拉链法</code><br>综合了两者的特性，寻址容易且插入删除简单<br><img src="../WeChatc8421fae6f0d64aa16343957d323351e.png" alt="avatar"></p>
-<p>上图左边是个<code>数组</code>,数组每个成员包括一个<code>指针</code>，指向一个<code>链表的头</code>。*<u>我们根据元素的一些特征把元素分配到不同的链表中去，也是根据这些特征，找到正确的链表，再从链表中找出这个元素。</u>*</p>
-<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a><strong>优点</strong>：</h5><ol>
-<li>不论哈希表中有多少数据，查询、插入、删除（有时包括删除）只需要接近常量的时间即0(1）的时间级。</li>
-<li>哈希表不仅速度快，编程实现也相对容易，如果需要在一秒种内查找上千条记录通常使用哈希表。</li>
-</ol>
-<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a><strong>缺点</strong>：</h5><ol>
-<li>它是基于数组的，数组创建后难于扩展，某些哈希表被基本填满时，性能下降得非常严重，所以程序员必须要清楚表中将要存储多少数据。</li>
-</ol>
-<p>*<u>如果不需要有序遍历数据，并且可以提前预测数据量的大小。那么哈希表在速度和易用性方面是无与伦比的。</u>*</p>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Hash%E8%A1%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Go-Map" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go-Map/">Go Map</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/Go-Map/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong>内部实现</strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
-<h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a><strong>声明和初始化</strong></h4><p><code>Map</code>的创建有 <code>make</code> 函数</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 键类型为 string ， 值类型为 int</span></span><br><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
-<p>使用<code>map字面量</code>方式创建和初始化map</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">"张三"</span>:<span class="number">23</span>,<span class="string">"李四"</span>:<span class="number">24</span>&#125;</span><br><span class="line"><span class="comment">// 空 map</span></span><br><span class="line">dict := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"><span class="comment">// nil map</span></span><br><span class="line"><span class="keyword">var</span> dict <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br></pre></td></tr></table></figure>
-<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a><strong>使用Map</strong></h4><p><code>Map</code>本质是一个指针，函数传递时，对map内部修改会影响原来的map</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">dict[<span class="string">"张三"</span>] = <span class="number">23</span> <span class="comment">// 如果 张三 存在则修改其值为 23 ，否则新增该键值对</span></span><br></pre></td></tr></table></figure>
-
-<p>判断键值对是否存在</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">age,exists := dict[“李四”]</span><br><span class="line"><span class="comment">// age 是键的值，exists是该键是否存在的 boolean 类型的变量</span></span><br></pre></td></tr></table></figure>
-
-<p>删除Map中的键值对使用<code>delete</code>函数</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(dict,<span class="string">"张三"</span>)<span class="comment">// 第一个参数为要操作的 Map ，第二个是要删除的 Map 的键</span></span><br></pre></td></tr></table></figure>
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go-Map/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Go函数和方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">Go 函数和数组</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
-<h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Go数组和切片" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">Go 函数和数组</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>同类型的数组是可以相互赋值的：<code>长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line"><span class="keyword">var</span> arr1 [<span class="number">5</span>]<span class="keyword">int</span> = arr <span class="comment">// success</span></span><br><span class="line"><span class="keyword">var</span> arr2 [<span class="number">4</span>]<span class="keyword">int</span> = arr <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
-<h4 id="指针数组："><a href="#指针数组：" class="headerlink" title="指针数组："></a><strong>指针数组：</strong></h4><p>创建了一个指针数组，索引1和3都创建了内存空间，其他索引是指针的零值 <code>nil</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]*<span class="keyword">int</span>&#123;<span class="number">1</span>:<span class="built_in">new</span>(<span class="keyword">int</span>),<span class="number">3</span>:<span class="built_in">new</span>(<span class="keyword">int</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改指针变量的值</span></span><br><span class="line">*arr[<span class="number">1</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p><code>注：</code> 以上因为只有索引 1 和 3 分配了内存，所以只有他们能赋值，如果给索引 0 赋值，会提示<code>无效内存</code>或者<code>nil指针引用</code></p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic</span>: runtime error: invalid memory address or <span class="literal">nil</span> pointer dereference</span><br></pre></td></tr></table></figure>
-<p>数组的指针与指针数组：<code>*[5]int</code>是数组的指针，<code>[5]*int</code>是指针数组</p>
-<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p>切片底层是数组，对象非常小，是只有三个字段的数据结构：</p>
-<ol>
-<li>指向底层数组的指针</li>
-<li>切片的长度</li>
-<li>切片的容量</li>
-</ol>
-<h5 id="切片的声明"><a href="#切片的声明" class="headerlink" title="切片的声明"></a><strong>切片的声明</strong></h5><p>make 方式，需要指定切片的长度</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>) <span class="comment">// 此时切片长度，容量均为5</span></span><br><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>,<span class="number">10</span>) <span class="comment">// 此时切片长度为5，容量是10（对应的是切片底层数组）</span></span><br></pre></td></tr></table></figure>
-<p>因为切片的底层是数组，所以创建切片时，如果不指定字面值的话，默认值就是数组的元素的零值。这里我们所以指定了容量是10，但是我们职能访问5个元素，因为切片的长度是5，剩下的5个元素，需要切片扩充后才可以访问。<code>容量必须&gt;=长度，我们是不能创建长度大于容量的切片的</code></p>
-<h5 id="使用字面量，初始化指定值创建切片"><a href="#使用字面量，初始化指定值创建切片" class="headerlink" title="使用字面量，初始化指定值创建切片"></a><strong>使用字面量，初始化指定值创建切片</strong></h5><p>与创建数组很像，不过不用设置<code>[]</code>的值，此时切片长度和容量是相等的</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>切片还有 <code>nil切片</code>和<code>空切片</code>，他们长度和容量都是0，但是指向底层数据的指针不一样，<code>nil切片</code>意味着指向底层数组的指针为<code>nil</code>，而<code>空切片</code>对应的指针是个地址。<br><code>nil切片</code>表示不存在的切片，而<code>空切片</code>表示一个空集合</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nil切片</span></span><br><span class="line"><span class="keyword">var</span> nilSlice []<span class="keyword">int</span></span><br><span class="line"><span class="comment">// 空切片</span></span><br><span class="line">slice := []<span class="keyword">int</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="基于现有数组或者切片创建"><a href="#基于现有数组或者切片创建" class="headerlink" title="基于现有数组或者切片创建"></a><strong>基于现有数组或者切片创建</strong></h5><p>使用<code>[i:j]</code>，表示从索引<code>i</code>开始，到索引<code>j</code>结束，截取原数组或者切片形成新切片，新切片包含<code>i</code>索引,但不包含<code>j</code>索引。如果省略<code>i</code>或<code>j</code>,则默认是0或原数组或切片的长度。<code>i</code>和<code>j</code>都不能越界</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line">slice1 := slice[:] </span><br><span class="line">slice2 := slice[<span class="number">0</span>:]</span><br><span class="line">slice3 := slice[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
-
-<p>此方法创建的新切片大小和容量计算公式:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对于底层数组容量是k的切片slice[i:j]来说</span><br><span class="line">长度: j-i</span><br><span class="line">容量: k-i</span><br></pre></td></tr></table></figure>
-
-<p><code>append</code>函数可以为切片追加新元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果切片的底层数组，没有足够的容量时，就会新建一个底层数组，把原来数组的值复制到新底层数组里，再追加新值，这时候就不会影响原来的底层数组了。</span><br><span class="line">所以一般我们在创建新切片的时候，最好要让新切片的长度和容量一样，这样我们在追加操作的时候就会生成新的底层数组，和原有数组分离，就不会因为共用底层数组而引起奇怪问题,因为共用数组的时候修改内容，会影响多个切片。</span><br></pre></td></tr></table></figure>
-<p><code>append</code>函数会智能的增长底层数组的容量，目前的算法是：容量小于1000个时，总是成倍的增长，一旦容量超过1000个，增长因子设为1.25，也就是说每次会增加25%的容量。</p>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -962,8 +337,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Tony">
 <meta property="og:description" content="数组同类型的数组是可以相互赋值的：长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。 123arr := [5]int&amp;#123;1,2,3,4,5&amp;#125;var arr1 [5]int = arr &#x2F;&#x2F; successvar arr2 [4]int = arr &#x2F;&#x2F; error 指针数组：创建了一个指针数组，索引1和3都创建了内存空间，其他索引是指针的零值 nil 1234arr">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-29T02:12:24.138Z">
+<meta property="og:updated_time" content="2019-10-29T09:18:32.538Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
@@ -194,14 +194,17 @@
 <li>切片的长度</li>
 <li>切片的容量</li>
 </ol>
-<h5 id="切片的声明"><a href="#切片的声明" class="headerlink" title="切片的声明"></a><strong><code>切片的声明</code></strong></h5><h5 id="make-方式，需要指定切片的长度"><a href="#make-方式，需要指定切片的长度" class="headerlink" title="make 方式，需要指定切片的长度"></a>make 方式，需要指定切片的长度</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>) <span class="comment">// 此时切片长度，容量均为5</span></span><br><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>,<span class="number">10</span>) <span class="comment">// 此时切片长度为5，容量是10（对应的是切片底层数组）</span></span><br></pre></td></tr></table></figure>
+<h5 id="切片的声明"><a href="#切片的声明" class="headerlink" title="切片的声明"></a><strong>切片的声明</strong></h5><p>make 方式，需要指定切片的长度</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>) <span class="comment">// 此时切片长度，容量均为5</span></span><br><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>,<span class="number">10</span>) <span class="comment">// 此时切片长度为5，容量是10（对应的是切片底层数组）</span></span><br></pre></td></tr></table></figure>
 <p>因为切片的底层是数组，所以创建切片时，如果不指定字面值的话，默认值就是数组的元素的零值。这里我们所以指定了容量是10，但是我们职能访问5个元素，因为切片的长度是5，剩下的5个元素，需要切片扩充后才可以访问。<code>容量必须&gt;=长度，我们是不能创建长度大于容量的切片的</code></p>
 <h5 id="使用字面量，初始化指定值创建切片"><a href="#使用字面量，初始化指定值创建切片" class="headerlink" title="使用字面量，初始化指定值创建切片"></a><strong>使用字面量，初始化指定值创建切片</strong></h5><p>与创建数组很像，不过不用设置<code>[]</code>的值，此时切片长度和容量是相等的</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure>
+
 <p>切片还有 <code>nil切片</code>和<code>空切片</code>，他们长度和容量都是0，但是指向底层数据的指针不一样，<code>nil切片</code>意味着指向底层数组的指针为<code>nil</code>，而<code>空切片</code>对应的指针是个地址。<br><code>nil切片</code>表示不存在的切片，而<code>空切片</code>表示一个空集合</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nil切片</span></span><br><span class="line"><span class="keyword">var</span> nilSlice []<span class="keyword">int</span></span><br><span class="line"><span class="comment">// 空切片</span></span><br><span class="line">slice := []<span class="keyword">int</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="基于现有数组或者切片创建"><a href="#基于现有数组或者切片创建" class="headerlink" title="基于现有数组或者切片创建"></a><strong>基于现有数组或者切片创建</strong></h5><p>使用<code>[i:j]</code>，表示从索引<code>i</code>开始，到索引<code>j</code>结束，截取原数组或者切片形成新切片，新切片包含<code>i</code>索引,但不包含<code>j</code>索引。如果省略<code>i</code>或<code>j</code>,则默认是0或原数组或切片的长度。<code>i</code>和<code>j</code>都不能越界</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line">slice1 := slice[:] </span><br><span class="line">slice2 := slice[<span class="number">0</span>:]</span><br><span class="line">slice3 := slice[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+
 <p>此方法创建的新切片大小和容量计算公式:</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对于底层数组容量是k的切片slice[i:j]来说</span><br><span class="line">长度: j-i</span><br><span class="line">容量: k-i</span><br></pre></td></tr></table></figure>
 
@@ -301,15 +304,20 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/10/29/Go-Map/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Go 函数和数组
+          Go Map
         
       </div>
     </a>
   
+  
+    <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Go 函数和数组</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

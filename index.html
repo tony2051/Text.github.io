@@ -42,7 +42,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/WechatIMG1.jpeg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Tony乙</a></h1>
@@ -100,7 +100,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/WechatIMG1.jpeg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Tony乙</h1>
@@ -151,6 +151,193 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Hash表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/Hash%E8%A1%A8/">Hash表</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/29/Hash%E8%A1%A8/" class="archive-article-date">
+  	<time datetime="2019-10-29T02:10:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value在表中的地址 = f(key)</span><br></pre></td></tr></table></figure>
+<p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
+<p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
+<h4 id="Hash表的特点"><a href="#Hash表的特点" class="headerlink" title="Hash表的特点"></a><strong>Hash表的特点</strong></h4><p>数组的特点：寻址容易，插入和删除困难;<br>链表的特点：寻址困难，插入和删除容易;</p>
+<p>Hash表的实现方法之一：<code>拉链法</code><br>综合了两者的特性，寻址容易且插入删除简单<br><img src="evernotecid://2F473FF1-D0F6-4737-B8CE-017D898F580F/appyinxiangcom/26683820/ENResource/p1" alt="d53f1ece938d022ba2e2a7e977796e54.png"></p>
+<p>上图左边是个<code>数组</code>,数组每个成员包括一个<code>指针</code>，指向一个<code>链表的头</code>。*<u>我们根据元素的一些特征把元素分配到不同的链表中去，也是根据这些特征，找到正确的链表，再从链表中找出这个元素。</u>*</p>
+<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a><strong><code>优点</code></strong>：</h5><ol>
+<li>不论哈希表中有多少数据，查询、插入、删除（有时包括删除）只需要接近常量的时间即0(1）的时间级。</li>
+<li>哈希表不仅速度快，编程实现也相对容易，如果需要在一秒种内查找上千条记录通常使用哈希表。<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a><strong><code>缺点</code></strong>：</h5></li>
+<li>它是基于数组的，数组创建后难于扩展，某些哈希表被基本填满时，性能下降得非常严重，所以程序员必须要清楚表中将要存储多少数据。</li>
+</ol>
+<p>*<u>如果不需要有序遍历数据，并且可以提前预测数据量的大小。那么哈希表在速度和易用性方面是无与伦比的。</u>*</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/Hash%E8%A1%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Go函数和方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">Go 函数和数组</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
+<h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Go-Map" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -189,13 +376,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/GO//" class="article-tag-list-link color3">GO</a>
+        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
         		</li>
       		
 		</ul>
@@ -234,74 +432,6 @@
 
 
   
-    <article id="post-Go函数和方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">Go函数和方法</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:27:12.785Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
-<h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Go数组和切片" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -309,13 +439,13 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">Go数组和切片</a>
+      <a class="article-title" href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">Go 函数和数组</a>
     </h1>
   
 
         
-        <a href="/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" class="archive-article-date">
-  	<time datetime="2019-10-28T09:51:56.920Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-28</time>
+        <a href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" class="archive-article-date">
+  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
 </a>
         
       </header>
@@ -357,11 +487,33 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">展开全文 >></a>
         </p>
       
 
@@ -422,7 +574,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -482,6 +634,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Go</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

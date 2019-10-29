@@ -6,14 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Category: GO | Tony</title>
+  <title>Hash表 | Tony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tony">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;categories&#x2F;GO&#x2F;index.html">
+  <meta name="description" content="什么是Hash 表哈希表(Hash table)也叫散列表,是根据关键码值(Key value)而直接进行访问的数据结构。也就是说，它通过关键码值映射到表中的一个位置来访问记录，以加快查找速度。这个映射函数叫做散列函数,存放记录的数组叫Hash表 1value在表中的地址 = f(key) 这里的关系f就是散列函数(Hash函数)  hashTable(key,value)就是把key通过哈希函数">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hash表">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;Hash%E8%A1%A8&#x2F;index.html">
 <meta property="og:site_name" content="Tony">
+<meta property="og:description" content="什么是Hash 表哈希表(Hash table)也叫散列表,是根据关键码值(Key value)而直接进行访问的数据结构。也就是说，它通过关键码值映射到表中的一个位置来访问记录，以加快查找速度。这个映射函数叫做散列函数,存放记录的数组叫Hash表 1value在表中的地址 = f(key) 这里的关系f就是散列函数(Hash函数)  hashTable(key,value)就是把key通过哈希函数">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="evernotecid:&#x2F;&#x2F;2F473FF1-D0F6-4737-B8CE-017D898F580F&#x2F;appyinxiangcom&#x2F;26683820&#x2F;ENResource&#x2F;p1">
+<meta property="og:updated_time" content="2019-10-29T02:11:41.702Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="evernotecid:&#x2F;&#x2F;2F473FF1-D0F6-4737-B8CE-017D898F580F&#x2F;appyinxiangcom&#x2F;26683820&#x2F;ENResource&#x2F;p1">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
   
@@ -42,7 +48,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/WechatIMG1.jpeg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">Tony乙</a></h1>
@@ -100,7 +106,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/WechatIMG1.jpeg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">Tony乙</h1>
@@ -149,60 +155,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hash表" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/29/Go-Map/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/29/Go-Map/">Go Map</a>
+    <h1 class="article-title" itemprop="name">
+      Hash表
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/10/29/Hash%E8%A1%A8/" class="archive-article-date">
+  	<time datetime="2019-10-29T02:10:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value在表中的地址 = f(key)</span><br></pre></td></tr></table></figure>
+<p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
+<p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
+<h4 id="Hash表的特点"><a href="#Hash表的特点" class="headerlink" title="Hash表的特点"></a><strong>Hash表的特点</strong></h4><p>数组的特点：寻址容易，插入和删除困难;<br>链表的特点：寻址困难，插入和删除容易;</p>
+<p>Hash表的实现方法之一：<code>拉链法</code><br>综合了两者的特性，寻址容易且插入删除简单<br><img src="evernotecid://2F473FF1-D0F6-4737-B8CE-017D898F580F/appyinxiangcom/26683820/ENResource/p1" alt="d53f1ece938d022ba2e2a7e977796e54.png"></p>
+<p>上图左边是个<code>数组</code>,数组每个成员包括一个<code>指针</code>，指向一个<code>链表的头</code>。*<u>我们根据元素的一些特征把元素分配到不同的链表中去，也是根据这些特征，找到正确的链表，再从链表中找出这个元素。</u>*</p>
+<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a><strong><code>优点</code></strong>：</h5><ol>
+<li>不论哈希表中有多少数据，查询、插入、删除（有时包括删除）只需要接近常量的时间即0(1）的时间级。</li>
+<li>哈希表不仅速度快，编程实现也相对容易，如果需要在一秒种内查找上千条记录通常使用哈希表。<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a><strong><code>缺点</code></strong>：</h5></li>
+<li>它是基于数组的，数组创建后难于扩展，某些哈希表被基本填满时，性能下降得非常严重，所以程序员必须要清楚表中将要存储多少数据。</li>
+</ol>
+<p>*<u>如果不需要有序遍历数据，并且可以提前预测数据量的大小。那么哈希表在速度和易用性方面是无与伦比的。</u>*</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/GO//" class="article-tag-list-link color3">GO</a>
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/29/Hash%E8%A1%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Go 函数和数组</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -225,15 +361,15 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -293,6 +429,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Go</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>

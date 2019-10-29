@@ -54,7 +54,9 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -112,6 +114,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -129,12 +133,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -171,7 +177,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
+        
+          
+            <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value在表中的地址 = f(key)</span><br></pre></td></tr></table></figure>
 <p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
 <p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
@@ -185,9 +193,8 @@
 </ol>
 <p>*<u>如果不需要有序遍历数据，并且可以提前预测数据量的大小。那么哈希表在速度和易用性方面是无与伦比的。</u>*</p>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -268,7 +275,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong><code>内部实现</code></strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
+        
+          
+            <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong><code>内部实现</code></strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
 <h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a><strong><code>声明和初始化</code></strong></h4><p><code>Map</code>的创建有 <code>make</code> 函数</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 键类型为 string ， 值类型为 int</span></span><br><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
 <p>使用<code>map字面量</code>方式创建和初始化map</p>
@@ -279,9 +288,8 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">age,exists := dict[“李四”]</span><br><span class="line"><span class="comment">// age 是键的值，exists是该键是否存在的 boolean 类型的变量</span></span><br></pre></td></tr></table></figure>
 <p>删除Map中的键值对使用<code>delete</code>函数</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(dict,<span class="string">"张三"</span>)<span class="comment">// 第一个参数为要操作的 Map ，第二个是要删除的 Map 的键</span></span><br></pre></td></tr></table></figure>
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -362,16 +370,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
+        
+          
+            <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
 <h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       
@@ -452,7 +461,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>同类型的数组是可以相互赋值的：<code>长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。</code></p>
+        
+          
+            <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>同类型的数组是可以相互赋值的：<code>长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line"><span class="keyword">var</span> arr1 [<span class="number">5</span>]<span class="keyword">int</span> = arr <span class="comment">// success</span></span><br><span class="line"><span class="keyword">var</span> arr2 [<span class="number">4</span>]<span class="keyword">int</span> = arr <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
 <h4 id="指针数组："><a href="#指针数组：" class="headerlink" title="指针数组："></a><strong>指针数组：</strong></h4><p>创建了一个指针数组，索引1和3都创建了内存空间，其他索引是指针的零值 <code>nil</code></p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]*<span class="keyword">int</span>&#123;<span class="number">1</span>:<span class="built_in">new</span>(<span class="keyword">int</span>),<span class="number">3</span>:<span class="built_in">new</span>(<span class="keyword">int</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改指针变量的值</span></span><br><span class="line">*arr[<span class="number">1</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
@@ -480,9 +491,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果切片的底层数组，没有足够的容量时，就会新建一个底层数组，把原来数组的值复制到新底层数组里，再追加新值，这时候就不会影响原来的底层数组了。</span><br><span class="line">所以一般我们在创建新切片的时候，最好要让新切片的长度和容量一样，这样我们在追加操作的时候就会生成新的底层数组，和原有数组分离，就不会因为共用底层数组而引起奇怪问题,因为共用数组的时候修改内容，会影响多个切片。</span><br></pre></td></tr></table></figure>
 <p><code>append</code>函数会智能的增长底层数组的容量，目前的算法是：容量小于1000个时，总是成倍的增长，一旦容量超过1000个，增长因子设为1.25，也就是说每次会增加25%的容量。</p>
 
-      
-
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       

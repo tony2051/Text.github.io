@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Tony">
 <meta property="og:description" content="在Go语言中，函数与方法有明确的概念区分。函数是指不属于任何结构体、类型的方法，即函数是没有接收者的，而方法是有接收者的。 1234&#x2F;&#x2F; Add 就是一个函数func Add(a int)int&amp;#123;    return a++    &amp;#125; func和方法名之间增加的参数(p person)就是接收者。现在类型person就有了一个String方法 1234567type perso">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-29T01:53:51.262Z">
+<meta property="og:updated_time" content="2019-10-29T02:52:22.551Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
@@ -58,7 +58,9 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -116,6 +118,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -133,12 +137,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -173,37 +179,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
+        
+          
+            <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
 <h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       

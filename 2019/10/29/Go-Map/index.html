@@ -58,7 +58,9 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -116,6 +118,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -133,12 +137,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -173,7 +179,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong><code>内部实现</code></strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
+        
+          
+            <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong><code>内部实现</code></strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
 <h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a><strong><code>声明和初始化</code></strong></h4><p><code>Map</code>的创建有 <code>make</code> 函数</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 键类型为 string ， 值类型为 int</span></span><br><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
 <p>使用<code>map字面量</code>方式创建和初始化map</p>
@@ -184,30 +192,8 @@
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">age,exists := dict[“李四”]</span><br><span class="line"><span class="comment">// age 是键的值，exists是该键是否存在的 boolean 类型的变量</span></span><br></pre></td></tr></table></figure>
 <p>删除Map中的键值对使用<code>delete</code>函数</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(dict,<span class="string">"张三"</span>)<span class="comment">// 第一个参数为要操作的 Map ，第二个是要删除的 Map 的键</span></span><br></pre></td></tr></table></figure>
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       

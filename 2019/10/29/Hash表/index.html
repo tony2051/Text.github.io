@@ -60,7 +60,9 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+				<li><a href="/categories">分类</a></li>
+	        
+				<li><a href="/archives">归档</a></li>
 	        
 			</ul>
 		</nav>
@@ -118,6 +120,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -135,12 +139,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/%E9%9A%8F%E7%AC%94/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/categories">分类</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
 		        
 				</ul>
 			</nav>
@@ -175,7 +181,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
+        
+          
+            <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value在表中的地址 = f(key)</span><br></pre></td></tr></table></figure>
 <p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
 <p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
@@ -189,30 +197,8 @@
 </ol>
 <p>*<u>如果不需要有序遍历数据，并且可以提前预测数据量的大小。那么哈希表在速度和易用性方面是无与伦比的。</u>*</p>
 
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
+          
+        
     </div>
     <div class="article-info article-info-index">
       

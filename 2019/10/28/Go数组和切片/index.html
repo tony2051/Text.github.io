@@ -6,13 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/10 | Hexo</title>
+  <title>Go数组和切片 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;10&#x2F;index.html">
+  <meta name="description" content="数组同类型的数组是可以相互赋值的：长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。 123arr := [5]int&amp;#123;1,2,3,4,5&amp;#125;var arr1 [5]int = arr &#x2F;&#x2F; successvar arr2 [4]int = arr &#x2F;&#x2F; error 指针数组：创建了一个指针数组，索引1和3都创建了内存空间，其他索引是指针的零值 nil 1234arr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go数组和切片">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;28&#x2F;Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="数组同类型的数组是可以相互赋值的：长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。 123arr := [5]int&amp;#123;1,2,3,4,5&amp;#125;var arr1 [5]int = arr &#x2F;&#x2F; successvar arr2 [4]int = arr &#x2F;&#x2F; error 指针数组：创建了一个指针数组，索引1和3都创建了内存空间，其他索引是指针的零值 nil 1234arr">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-29T01:07:00.449Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -149,49 +152,172 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Go数组和切片" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" class="archive-article-date">
-  	<time datetime="2019-10-28T09:51:56.920Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-28</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">Go数组和切片</a>
+    <h1 class="article-title" itemprop="name">
+      Go数组和切片
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" class="archive-article-date">
+  	<time datetime="2019-10-28T09:51:56.920Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>同类型的数组是可以相互赋值的：<code>长度一样，并且每个元素的类型也一样的数组，才是同类型的数组。</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line"><span class="keyword">var</span> arr1 [<span class="number">5</span>]<span class="keyword">int</span> = arr <span class="comment">// success</span></span><br><span class="line"><span class="keyword">var</span> arr2 [<span class="number">4</span>]<span class="keyword">int</span> = arr <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
+<h4 id="指针数组："><a href="#指针数组：" class="headerlink" title="指针数组："></a><strong>指针数组：</strong></h4><p>创建了一个指针数组，索引1和3都创建了内存空间，其他索引是指针的零值 <code>nil</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">arr := [<span class="number">5</span>]*<span class="keyword">int</span>&#123;<span class="number">1</span>:<span class="built_in">new</span>(<span class="keyword">int</span>),<span class="number">3</span>:<span class="built_in">new</span>(<span class="keyword">int</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 修改指针变量的值</span></span><br><span class="line">*arr[<span class="number">1</span>] = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><code>注：</code> 以上因为只有索引 1 和 3 分配了内存，所以只有他们能赋值，如果给索引 0 赋值，会提示<code>无效内存</code>或者<code>nil指针引用</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">panic</span>: runtime error: invalid memory address or <span class="literal">nil</span> pointer dereference</span><br></pre></td></tr></table></figure>
+<p>数组的指针与指针数组：<code>*[5]int</code>是数组的指针，<code>[5]*int</code>是指针数组</p>
+<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p>切片底层是数组，对象非常小，是只有三个字段的数据结构：</p>
+<ol>
+<li>指向底层数组的指针</li>
+<li>切片的长度</li>
+<li>切片的容量</li>
+</ol>
+<h5 id="切片的声明"><a href="#切片的声明" class="headerlink" title="切片的声明"></a><strong><code>切片的声明</code></strong></h5><h5 id="make-方式，需要指定切片的长度"><a href="#make-方式，需要指定切片的长度" class="headerlink" title="make 方式，需要指定切片的长度"></a>make 方式，需要指定切片的长度</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>) <span class="comment">// 此时切片长度，容量均为5</span></span><br><span class="line">slice := <span class="built_in">make</span>([]<span class="keyword">int</span>,<span class="number">5</span>,<span class="number">10</span>) <span class="comment">// 此时切片长度为5，容量是10（对应的是切片底层数组）</span></span><br></pre></td></tr></table></figure>
+<p>因为切片的底层是数组，所以创建切片时，如果不指定字面值的话，默认值就是数组的元素的零值。这里我们所以指定了容量是10，但是我们职能访问5个元素，因为切片的长度是5，剩下的5个元素，需要切片扩充后才可以访问。<code>容量必须&gt;=长度，我们是不能创建长度大于容量的切片的</code></p>
+<h5 id="使用字面量，初始化指定值创建切片"><a href="#使用字面量，初始化指定值创建切片" class="headerlink" title="使用字面量，初始化指定值创建切片"></a><strong>使用字面量，初始化指定值创建切片</strong></h5><p>与创建数组很像，不过不用设置<code>[]</code>的值，此时切片长度和容量是相等的</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>切片还有 <code>nil切片</code>和<code>空切片</code>，他们长度和容量都是0，但是指向底层数据的指针不一样，<code>nil切片</code>意味着指向底层数组的指针为<code>nil</code>，而<code>空切片</code>对应的指针是个地址。<br><code>nil切片</code>表示不存在的切片，而<code>空切片</code>表示一个空集合</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nil切片</span></span><br><span class="line"><span class="keyword">var</span> nilSlice []<span class="keyword">int</span></span><br><span class="line"><span class="comment">// 空切片</span></span><br><span class="line">slice := []<span class="keyword">int</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="基于现有数组或者切片创建"><a href="#基于现有数组或者切片创建" class="headerlink" title="基于现有数组或者切片创建"></a><strong>基于现有数组或者切片创建</strong></h5><p>使用<code>[i:j]</code>，表示从索引<code>i</code>开始，到索引<code>j</code>结束，截取原数组或者切片形成新切片，新切片包含<code>i</code>索引,但不包含<code>j</code>索引。如果省略<code>i</code>或<code>j</code>,则默认是0或原数组或切片的长度。<code>i</code>和<code>j</code>都不能越界</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line">slice1 := slice[:] </span><br><span class="line">slice2 := slice[<span class="number">0</span>:]</span><br><span class="line">slice3 := slice[:<span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<p>此方法创建的新切片大小和容量计算公式:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">对于底层数组容量是k的切片slice[i:j]来说</span><br><span class="line">长度: j-i</span><br><span class="line">容量: k-i</span><br></pre></td></tr></table></figure>
 
+<p><code>append</code>函数可以为切片追加新元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果切片的底层数组，没有足够的容量时，就会新建一个底层数组，把原来数组的值复制到新底层数组里，再追加新值，这时候就不会影响原来的底层数组了。</span><br><span class="line">所以一般我们在创建新切片的时候，最好要让新切片的长度和容量一样，这样我们在追加操作的时候就会生成新的底层数组，和原有数组分离，就不会因为共用底层数组而引起奇怪问题,因为共用数组的时候修改内容，会影响多个切片。</span><br></pre></td></tr></table></figure>
+<p><code>append</code>函数会智能的增长底层数组的容量，目前的算法是：容量小于1000个时，总是成倍的增长，一旦容量超过1000个，增长因子设为1.25，也就是说每次会增加25%的容量。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/28/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
+
   
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -214,8 +340,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

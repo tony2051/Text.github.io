@@ -184,7 +184,7 @@
 <p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
 <p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
 <h4 id="Hash表的特点"><a href="#Hash表的特点" class="headerlink" title="Hash表的特点"></a><strong>Hash表的特点</strong></h4><p>数组的特点：寻址容易，插入和删除困难;<br>链表的特点：寻址困难，插入和删除容易;</p>
-<p>Hash表的实现方法之一：<code>拉链法</code><br>综合了两者的特性，寻址容易且插入删除简单<br><img src="WeChatc8421fae6f0d64aa16343957d323351e.png" alt="avatar"></p>
+<p>Hash表的实现方法之一：<code>拉链法</code><br>综合了两者的特性，寻址容易且插入删除简单<br><img src="../WeChatc8421fae6f0d64aa16343957d323351e.png" alt="avatar"></p>
 <p>上图左边是个<code>数组</code>,数组每个成员包括一个<code>指针</code>，指向一个<code>链表的头</code>。*<u>我们根据元素的一些特征把元素分配到不同的链表中去，也是根据这些特征，找到正确的链表，再从链表中找出这个元素。</u>*</p>
 <h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a><strong><code>优点</code></strong>：</h5><ol>
 <li>不论哈希表中有多少数据，查询、插入、删除（有时包括删除）只需要接近常量的时间即0(1）的时间级。</li>

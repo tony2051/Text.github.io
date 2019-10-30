@@ -143,6 +143,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Iris中使用JWT" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/30/Iris%E4%B8%AD%E4%BD%BF%E7%94%A8JWT/">Iris中使用JWT</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/30/Iris%E4%B8%AD%E4%BD%BF%E7%94%A8JWT/" class="archive-article-date">
+  	<time datetime="2019-10-30T01:19:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <h3 id="JWT简介"><a href="#JWT简介" class="headerlink" title="JWT简介"></a><strong>JWT简介</strong></h3><p><strong>JWT</strong> 是 <strong>Json Web Token</strong> 的缩写，是一个签名的Json对象，可以用作身份验证。<code>Bearer</code> 在Oauth2中通常用于令牌。令牌由三部分组成，以 <code>.</code> 分割。前两部分是JSON对象，并进行<code>base64url</code>编码，最后一部分是签名，以相同格式编码。</p>
+<p><strong>JWT</strong>原理：在服务器认证后，生成一个加密的 JSON 对象，即 Token 返还给用户，之后用户与服务端通信都需要带上该 Token 令牌，服务器只依靠该令牌认定用户身份是否合法，因此服务器就不需要保存任何 session 数据了。<br>每当用户想要访问受保护的路由或资源时，用户代理应该使用承载模式发送JWT，通常在<code>Authorization Header</code>中。Header的内容应如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>JWT</strong>的组成:<code>Header.Payload.Signature</code></p>
+<ul>
+<li>Header（头部）：一个JSON对象，描述JWT的元数据，一般如下：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"alg"</span>:<span class="string">"HS256"</span>,</span><br><span class="line">    <span class="string">"typ"</span>:<span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<code>alg</code>属性表示签名的算法为 HS256(HMAC SHA256),<code>typ</code>属性表示该 Token 的类型，JWT令牌统一写为 <code>JWT</code>。最后将该对象通过 <code>Base64URL</code> 算法转为字符串</li>
+<li>Payload（负载）：也是JSON对象，用来存放实际需要传递的数据<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"userId"</span>:<span class="string">"123"</span></span><br><span class="line">    <span class="string">"exp"</span>:<span class="string">"3132134213"</span></span><br><span class="line">    <span class="string">"iat"</span>:<span class="string">"1231312323"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+可以在该对象中添加时间戳属性，<code>iat</code>属性用来表示当前时间戳，<code>exp</code>属性表示到期时间戳，有了这两个属性就可以验证 token 是否过期。该对象也要经过 <code>Base64Url</code>编码</li>
+<li>Signature（签名）：由于前两部分虽然经过编码，数据不可串改，但是是透明的，为了防止数据被恶意篡改，需要对前两部分签名。首先需要定义一个 <code>secret</code>密钥，这个密钥只有服务器知道，然后使用 Header 中指定的签名算法 生成签名，以下为 HMAC SHA256 算法创建签名:<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">"."</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="在Iris中使用-JWT"><a href="#在Iris中使用-JWT" class="headerlink" title="在Iris中使用 JWT"></a><strong>在Iris中使用 JWT</strong></h3><p>官方地址：<a href="https://github.com/dgrijalva/jwt-go" target="_blank" rel="noopener">https://github.com/dgrijalva/jwt-go</a></p>
+<p>终端下载：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 使用 go mod 的话直接在项目中 go get</span><br><span class="line">go get &quot;github.com/dgrijalva/jwt-go&quot;</span><br></pre></td></tr></table></figure>
+
+<p>自定义 JWT 中间件验证：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"github.com/dgrijalva/jwt-go"</span></span><br><span class="line">	jailer <span class="string">"github.com/iris-contrib/middleware/jwt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 验证 jwt</span></span><br><span class="line"><span class="comment"> * @method JwtHandler</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">JwtHandler</span><span class="params">()</span> *<span class="title">jailer</span>.<span class="title">Middleware</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> jailer.New(jailer.Config&#123;</span><br><span class="line">		<span class="comment">// 验证 jwt 的 token 的方法</span></span><br><span class="line">		ValidationKeyGetter: <span class="function"><span class="keyword">func</span><span class="params">(token *jwt.Token)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, error)</span></span> &#123;</span><br><span class="line">			<span class="comment">// 自己加密的密钥</span></span><br><span class="line">			<span class="keyword">return</span> []<span class="keyword">byte</span>(<span class="string">"secret"</span>), <span class="literal">nil</span></span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		SigningMethod: jwt.SigningMethodHS256,</span><br><span class="line">		Expiration:<span class="literal">true</span>,</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一个简单的验证 token 的中间件就写好了。让我们看一下中间件的配置 jailer.Config<br>JWT 中 结构体 Config 源码解析</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Config <span class="keyword">struct</span> &#123;</span><br><span class="line">	<span class="comment">//返回 JWT 验证签名 密钥的函数，默认值为nil</span></span><br><span class="line">	ValidationKeyGetter jwt.Keyfunc</span><br><span class="line">	<span class="comment">// 请求中用户(&amp;令牌)信息所在的属性的名称，如果是 JWT 将会被存储,默认值为 jwt</span></span><br><span class="line">	ContextKey <span class="keyword">string</span></span><br><span class="line">	<span class="comment">// 令牌验证出错调用的函数</span></span><br><span class="line">	ErrorHandler errorHandler</span><br><span class="line">	<span class="comment">// 是否需要凭证，默认值 false</span></span><br><span class="line">	CredentialsOptional <span class="keyword">bool</span></span><br><span class="line">	<span class="comment">//从 request 中提取 token 的函数  默认 FromAuthHeader 从 from Authorization header 中获取 token</span></span><br><span class="line">	Extractor TokenExtractor</span><br><span class="line">	<span class="comment">// 设置后，所有使用OPTIONS方法的请求都将使用身份验证</span></span><br><span class="line">	<span class="comment">//如果使用需在 路由中注册，默认值为 false</span></span><br><span class="line">	EnableAuthOnOptions <span class="keyword">bool</span></span><br><span class="line">	<span class="comment">// 设置之后，middelware将验证是否使用特定的签名算法对令牌进行了签名，如果签名方法不是常量，可以使用ValidationKeyGetter回调来实现其他检查，默认值 nil</span></span><br><span class="line">	SigningMethod jwt.SigningMethod</span><br><span class="line">	<span class="comment">// 验证 令牌是否过期，如果过期返回 过期错误，默认值 false</span></span><br><span class="line">	Expiration <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在登陆的时候生成 JWT Token</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">token := jwt.New(jwt.SigningMethodHS256) <span class="comment">// 创建 Header ,算法为 HS256</span></span><br><span class="line">claims := <span class="built_in">make</span>(jwt.MapClaims)</span><br><span class="line">claims[<span class="string">"exp"</span>] = time.Now().Add(time.Hour * time.Duration(<span class="number">12</span>)).Unix()<span class="comment">// 时间戳</span></span><br><span class="line">claims[<span class="string">"iat"</span>] = time.Now().Unix() <span class="comment">// 生成时的当前时间戳</span></span><br><span class="line">claims[<span class="string">"user_id"</span>] = user.Id <span class="comment">// 自定义属性</span></span><br><span class="line">token.Claims = claims</span><br><span class="line">tokenString, err := token.SignedString([]<span class="keyword">byte</span>(<span class="string">"secret"</span>)) <span class="comment">// 签名密钥</span></span><br></pre></td></tr></table></figure>
+<p><code>tokenString</code> 就是我们得到的 Token 令牌了，在令牌中的第二部分加入了 <code>user_id</code>属性，方便之后用户在登陆时候的其他操作</p>
+<p>在路由中添加 中间件验证</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v1.PartyFunc(<span class="string">"/login"</span>, <span class="function"><span class="keyword">func</span><span class="params">(login router.Party)</span></span> &#123;</span><br><span class="line">			login.Post(<span class="string">"/user_login"</span>, controller.Login)</span><br><span class="line">			login.Post(<span class="string">"/user_reg"</span>, controller.Register)</span><br><span class="line">		&#125;)</span><br><span class="line">v1.Use(middleware.JwtHandler().Serve)</span><br></pre></td></tr></table></figure>
+<p>JWT 自带验证方法，如果想再自行加入验证可以注册新的中间件，例如</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由验证</span></span><br><span class="line">v1.Use(middleware.JwtHandler().Serve, middleware.AuthToken)</span><br><span class="line"></span><br><span class="line"><span class="comment">// middleware.AuthToken 中间件 中部分代码</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AuthToken</span><span class="params">(ctx iris.Context)</span></span> &#123;</span><br><span class="line">    u := ctx.Values().Get(<span class="string">"jwt"</span>).(*jwt.Token) <span class="comment">//获取 token 信息</span></span><br><span class="line">    userId, _ := u.Claims.(jwt.MapClaims)[<span class="string">"user_id"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如例子，可以获取到我们之前 存在token中的 userId 属性,之后可以进行其他操作</p>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/30/Iris%E4%B8%AD%E4%BD%BF%E7%94%A8JWT/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Go-读写xml格式文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -835,97 +949,6 @@
 
 
   
-    <article id="post-Go函数和方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">Go 函数和数组</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-          
-            <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
-<h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Go数组和切片" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1012,6 +1035,97 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Go函数和方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">Go 函数和数组</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+          
+            <p>在Go语言中，函数与方法有明确的概念区分。<br><code>函数</code>是指<u><em>不属于任何结构体</em></u>、<u><em>类型</em></u>的<code>方法</code>，即函数是没有接收者的，而<code>方法</code>是有接收者的。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add 就是一个函数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Add</span><span class="params">(a <span class="keyword">int</span>)</span><span class="title">int</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a++</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>func</code>和方法名之间增加的参数<code>(p person)</code>就是接收者。现在类型<code>person</code>就有了一个<code>String</code>方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> person <span class="keyword">struct</span>&#123;</span><br><span class="line">    name <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p person)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"person name is "</span> + p.name</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>值接收者</code>与<code>指针接收者</code><br>在调用方法的时候，传递的接收者本质都是<code>副本</code>,只不过一个是<code>值副本</code>，一个是<code>指针副本</code>。指针具有<code>指向原始值</code>的特性,所以修改了指针指向的值，也就修改了原有的值。</p>
+<h5 id="多值返回"><a href="#多值返回" class="headerlink" title="多值返回"></a><strong><code>多值返回</code></strong></h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a,b <span class="keyword">int</span>)</span><span class="params">(<span class="keyword">int</span>,error)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a+b,<span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/29/Go%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95/">展开全文 >></a>
         </p>
       
 
@@ -1134,11 +1248,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">js</a>
+                <a href="javascript:void(0)" class="js-tag color5">数据结构</a>
               </li>
             
             <div class="clearfix"></div>

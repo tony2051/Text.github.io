@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hash表 | Tony</title>
+  <title>Iris中使用JWT | Tony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="什么是Hash 表哈希表(Hash table)也叫散列表,是根据关键码值(Key value)而直接进行访问的数据结构。也就是说，它通过关键码值映射到表中的一个位置来访问记录，以加快查找速度。这个映射函数叫做散列函数,存放记录的数组叫Hash表 1value在表中的地址 = f(key) 这里的关系f就是散列函数(Hash函数)  hashTable(key,value)就是把key通过哈希函数">
-<meta name="keywords" content="数据结构">
+  <meta name="description" content="JWT简介JWT 是 Json Web Token 的缩写，是一个签名的Json对象，可以用作身份验证。Bearer 在Oauth2中通常用于令牌。令牌由三部分组成，以 . 分割。前两部分是JSON对象，并进行base64url编码，最后一部分是签名，以相同格式编码。 JWT原理：在服务器认证后，生成一个加密的 JSON 对象，即 Token 返还给用户，之后用户与服务端通信都需要带上该 Toke">
+<meta name="keywords" content="Go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hash表">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;Hash%E8%A1%A8&#x2F;index.html">
+<meta property="og:title" content="Iris中使用JWT">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;30&#x2F;Iris%E4%B8%AD%E4%BD%BF%E7%94%A8JWT&#x2F;index.html">
 <meta property="og:site_name" content="Tony">
-<meta property="og:description" content="什么是Hash 表哈希表(Hash table)也叫散列表,是根据关键码值(Key value)而直接进行访问的数据结构。也就是说，它通过关键码值映射到表中的一个位置来访问记录，以加快查找速度。这个映射函数叫做散列函数,存放记录的数组叫Hash表 1value在表中的地址 = f(key) 这里的关系f就是散列函数(Hash函数)  hashTable(key,value)就是把key通过哈希函数">
+<meta property="og:description" content="JWT简介JWT 是 Json Web Token 的缩写，是一个签名的Json对象，可以用作身份验证。Bearer 在Oauth2中通常用于令牌。令牌由三部分组成，以 . 分割。前两部分是JSON对象，并进行base64url编码，最后一部分是签名，以相同格式编码。 JWT原理：在服务器认证后，生成一个加密的 JSON 对象，即 Token 返还给用户，之后用户与服务端通信都需要带上该 Toke">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;WeChatc8421fae6f0d64aa16343957d323351e.png">
-<meta property="og:updated_time" content="2019-10-29T09:16:24.926Z">
+<meta property="og:updated_time" content="2019-10-30T02:27:39.074Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;WeChatc8421fae6f0d64aa16343957d323351e.png">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
   
@@ -147,20 +145,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Hash表" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Iris中使用JWT" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hash表
+      Iris中使用JWT
     </h1>
   
 
         
-        <a href="/2019/10/29/Hash%E8%A1%A8/" class="archive-article-date">
-  	<time datetime="2019-10-29T02:10:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+        <a href="/2019/10/30/Iris%E4%B8%AD%E4%BD%BF%E7%94%A8JWT/" class="archive-article-date">
+  	<time datetime="2019-10-30T01:19:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
 </a>
         
       </header>
@@ -169,21 +167,35 @@
       
         
           
-            <h4 id="什么是Hash-表"><a href="#什么是Hash-表" class="headerlink" title="什么是Hash 表"></a><strong>什么是Hash 表</strong></h4><p><code>哈希表(Hash table)</code>也叫<code>散列表</code>,是<u>根据关键码值(Key value)而直接进行访问的数据结构。</u>也就是说，它<u>通过关键码值映射到表中的一个位置来访问记录，以加快查找速度</u>。这个映射函数叫做<code>散列函数</code>,存放记录的数组叫<code>Hash表</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value在表中的地址 = f(key)</span><br></pre></td></tr></table></figure>
-<p>这里的关系<code>f</code>就是<code>散列函数(Hash函数)</code> </p>
-<p><code>hashTable(key,value)</code>就是把<code>key</code>通过<code>哈希函数</code>转换为一个<code>整形数字</code>,然后将该数字对数组长度进行取余，取余结果就当作数组的下标，将<code>value</code>存储在以该数字为下表的数组空间中。而当使用哈希表查询的时候，就是在此<u>使用<code>哈希函数</code>将<code>key</code>转换为对应的数组下标，并定位到该空间获取<code>value</code></u>。</p>
-<h4 id="Hash表的特点"><a href="#Hash表的特点" class="headerlink" title="Hash表的特点"></a><strong>Hash表的特点</strong></h4><p>数组的特点：寻址容易，插入和删除困难;<br>链表的特点：寻址困难，插入和删除容易;</p>
-<p>Hash表的实现方法之一：<code>拉链法</code><br>综合了两者的特性，寻址容易且插入删除简单<br><img src="../WeChatc8421fae6f0d64aa16343957d323351e.png" alt="avatar"></p>
-<p>上图左边是个<code>数组</code>,数组每个成员包括一个<code>指针</code>，指向一个<code>链表的头</code>。*<u>我们根据元素的一些特征把元素分配到不同的链表中去，也是根据这些特征，找到正确的链表，再从链表中找出这个元素。</u>*</p>
-<h5 id="优点："><a href="#优点：" class="headerlink" title="优点："></a><strong>优点</strong>：</h5><ol>
-<li>不论哈希表中有多少数据，查询、插入、删除（有时包括删除）只需要接近常量的时间即0(1）的时间级。</li>
-<li>哈希表不仅速度快，编程实现也相对容易，如果需要在一秒种内查找上千条记录通常使用哈希表。</li>
-</ol>
-<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a><strong>缺点</strong>：</h5><ol>
-<li>它是基于数组的，数组创建后难于扩展，某些哈希表被基本填满时，性能下降得非常严重，所以程序员必须要清楚表中将要存储多少数据。</li>
-</ol>
-<p>*<u>如果不需要有序遍历数据，并且可以提前预测数据量的大小。那么哈希表在速度和易用性方面是无与伦比的。</u>*</p>
+            <h3 id="JWT简介"><a href="#JWT简介" class="headerlink" title="JWT简介"></a><strong>JWT简介</strong></h3><p><strong>JWT</strong> 是 <strong>Json Web Token</strong> 的缩写，是一个签名的Json对象，可以用作身份验证。<code>Bearer</code> 在Oauth2中通常用于令牌。令牌由三部分组成，以 <code>.</code> 分割。前两部分是JSON对象，并进行<code>base64url</code>编码，最后一部分是签名，以相同格式编码。</p>
+<p><strong>JWT</strong>原理：在服务器认证后，生成一个加密的 JSON 对象，即 Token 返还给用户，之后用户与服务端通信都需要带上该 Token 令牌，服务器只依靠该令牌认定用户身份是否合法，因此服务器就不需要保存任何 session 数据了。<br>每当用户想要访问受保护的路由或资源时，用户代理应该使用承载模式发送JWT，通常在<code>Authorization Header</code>中。Header的内容应如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer &lt;token&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>JWT</strong>的组成:<code>Header.Payload.Signature</code></p>
+<ul>
+<li>Header（头部）：一个JSON对象，描述JWT的元数据，一般如下：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"alg"</span>:<span class="string">"HS256"</span>,</span><br><span class="line">    <span class="string">"typ"</span>:<span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<code>alg</code>属性表示签名的算法为 HS256(HMAC SHA256),<code>typ</code>属性表示该 Token 的类型，JWT令牌统一写为 <code>JWT</code>。最后将该对象通过 <code>Base64URL</code> 算法转为字符串</li>
+<li>Payload（负载）：也是JSON对象，用来存放实际需要传递的数据<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"userId"</span>:<span class="string">"123"</span></span><br><span class="line">    <span class="string">"exp"</span>:<span class="string">"3132134213"</span></span><br><span class="line">    <span class="string">"iat"</span>:<span class="string">"1231312323"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+可以在该对象中添加时间戳属性，<code>iat</code>属性用来表示当前时间戳，<code>exp</code>属性表示到期时间戳，有了这两个属性就可以验证 token 是否过期。该对象也要经过 <code>Base64Url</code>编码</li>
+<li>Signature（签名）：由于前两部分虽然经过编码，数据不可串改，但是是透明的，为了防止数据被恶意篡改，需要对前两部分签名。首先需要定义一个 <code>secret</code>密钥，这个密钥只有服务器知道，然后使用 Header 中指定的签名算法 生成签名，以下为 HMAC SHA256 算法创建签名:<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256(</span><br><span class="line">  base64UrlEncode(header) + <span class="string">"."</span> +</span><br><span class="line">  base64UrlEncode(payload),</span><br><span class="line">  secret)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="在Iris中使用-JWT"><a href="#在Iris中使用-JWT" class="headerlink" title="在Iris中使用 JWT"></a><strong>在Iris中使用 JWT</strong></h3><p>官方地址：<a href="https://github.com/dgrijalva/jwt-go" target="_blank" rel="noopener">https://github.com/dgrijalva/jwt-go</a></p>
+<p>终端下载：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 使用 go mod 的话直接在项目中 go get</span><br><span class="line">go get &quot;github.com/dgrijalva/jwt-go&quot;</span><br></pre></td></tr></table></figure>
+
+<p>自定义 JWT 中间件验证：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"github.com/dgrijalva/jwt-go"</span></span><br><span class="line">	jailer <span class="string">"github.com/iris-contrib/middleware/jwt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 验证 jwt</span></span><br><span class="line"><span class="comment"> * @method JwtHandler</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">JwtHandler</span><span class="params">()</span> *<span class="title">jailer</span>.<span class="title">Middleware</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> jailer.New(jailer.Config&#123;</span><br><span class="line">		<span class="comment">// 验证 jwt 的 token 的方法</span></span><br><span class="line">		ValidationKeyGetter: <span class="function"><span class="keyword">func</span><span class="params">(token *jwt.Token)</span> <span class="params">(<span class="keyword">interface</span>&#123;&#125;, error)</span></span> &#123;</span><br><span class="line">			<span class="comment">// 自己加密的密钥</span></span><br><span class="line">			<span class="keyword">return</span> []<span class="keyword">byte</span>(<span class="string">"secret"</span>), <span class="literal">nil</span></span><br><span class="line">		&#125;,</span><br><span class="line"></span><br><span class="line">		SigningMethod: jwt.SigningMethodHS256,</span><br><span class="line">		Expiration:<span class="literal">true</span>,</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一个简单的验证 token 的中间件就写好了。让我们看一下中间件的配置 jailer.Config<br>JWT 中 结构体 Config 源码解析</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Config <span class="keyword">struct</span> &#123;</span><br><span class="line">	<span class="comment">//返回 JWT 验证签名 密钥的函数，默认值为nil</span></span><br><span class="line">	ValidationKeyGetter jwt.Keyfunc</span><br><span class="line">	<span class="comment">// 请求中用户(&amp;令牌)信息所在的属性的名称，如果是 JWT 将会被存储,默认值为 jwt</span></span><br><span class="line">	ContextKey <span class="keyword">string</span></span><br><span class="line">	<span class="comment">// 令牌验证出错调用的函数</span></span><br><span class="line">	ErrorHandler errorHandler</span><br><span class="line">	<span class="comment">// 是否需要凭证，默认值 false</span></span><br><span class="line">	CredentialsOptional <span class="keyword">bool</span></span><br><span class="line">	<span class="comment">//从 request 中提取 token 的函数  默认 FromAuthHeader 从 from Authorization header 中获取 token</span></span><br><span class="line">	Extractor TokenExtractor</span><br><span class="line">	<span class="comment">// 设置后，所有使用OPTIONS方法的请求都将使用身份验证</span></span><br><span class="line">	<span class="comment">//如果使用需在 路由中注册，默认值为 false</span></span><br><span class="line">	EnableAuthOnOptions <span class="keyword">bool</span></span><br><span class="line">	<span class="comment">// 设置之后，middelware将验证是否使用特定的签名算法对令牌进行了签名，如果签名方法不是常量，可以使用ValidationKeyGetter回调来实现其他检查，默认值 nil</span></span><br><span class="line">	SigningMethod jwt.SigningMethod</span><br><span class="line">	<span class="comment">// 验证 令牌是否过期，如果过期返回 过期错误，默认值 false</span></span><br><span class="line">	Expiration <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在登陆的时候生成 JWT Token</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">token := jwt.New(jwt.SigningMethodHS256) <span class="comment">// 创建 Header ,算法为 HS256</span></span><br><span class="line">claims := <span class="built_in">make</span>(jwt.MapClaims)</span><br><span class="line">claims[<span class="string">"exp"</span>] = time.Now().Add(time.Hour * time.Duration(<span class="number">12</span>)).Unix()<span class="comment">// 时间戳</span></span><br><span class="line">claims[<span class="string">"iat"</span>] = time.Now().Unix() <span class="comment">// 生成时的当前时间戳</span></span><br><span class="line">claims[<span class="string">"user_id"</span>] = user.Id <span class="comment">// 自定义属性</span></span><br><span class="line">token.Claims = claims</span><br><span class="line">tokenString, err := token.SignedString([]<span class="keyword">byte</span>(<span class="string">"secret"</span>)) <span class="comment">// 签名密钥</span></span><br></pre></td></tr></table></figure>
+<p><code>tokenString</code> 就是我们得到的 Token 令牌了，在令牌中的第二部分加入了 <code>user_id</code>属性，方便之后用户在登陆时候的其他操作</p>
+<p>在路由中添加 中间件验证</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v1.PartyFunc(<span class="string">"/login"</span>, <span class="function"><span class="keyword">func</span><span class="params">(login router.Party)</span></span> &#123;</span><br><span class="line">			login.Post(<span class="string">"/user_login"</span>, controller.Login)</span><br><span class="line">			login.Post(<span class="string">"/user_reg"</span>, controller.Register)</span><br><span class="line">		&#125;)</span><br><span class="line">v1.Use(middleware.JwtHandler().Serve)</span><br></pre></td></tr></table></figure>
+<p>JWT 自带验证方法，如果想再自行加入验证可以注册新的中间件，例如</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由验证</span></span><br><span class="line">v1.Use(middleware.JwtHandler().Serve, middleware.AuthToken)</span><br><span class="line"></span><br><span class="line"><span class="comment">// middleware.AuthToken 中间件 中部分代码</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AuthToken</span><span class="params">(ctx iris.Context)</span></span> &#123;</span><br><span class="line">    u := ctx.Values().Get(<span class="string">"jwt"</span>).(*jwt.Token) <span class="comment">//获取 token 信息</span></span><br><span class="line">    userId, _ := u.Claims.(jwt.MapClaims)[<span class="string">"user_id"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如例子，可以获取到我们之前 存在token中的 userId 属性,之后可以进行其他操作</p>
 
           
         
@@ -196,7 +208,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Go</a>
         		</li>
       		
 		</ul>
@@ -208,7 +220,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        			<a href="/categories/Go//" class="article-tag-list-link color3">Go</a>
         		</li>
       		
 		</ul>
@@ -263,7 +275,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/29/Hash%E8%A1%A8/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/30/Iris%E4%B8%AD%E4%BD%BF%E7%94%A8JWT/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -277,18 +289,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/29/%E5%87%BD%E6%95%B0%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92%E4%B8%8E%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          函数的值传递与指针传递
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/29/Go-Map/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Go Map</div>
+    <a href="/2019/10/29/Go-%E8%AF%BB%E5%86%99xml%E6%A0%BC%E5%BC%8F%E6%96%87%E4%BB%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Go 读写xml格式文件</div>
       <i class="icon-circle-right"></i>
     </a>
   

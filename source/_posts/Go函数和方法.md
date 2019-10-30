@@ -1,5 +1,5 @@
 ---
-title: Go 函数和数组
+title: Go 函数和方法
 date: 2019-10-29 09:44:15
 categories:
 - Go

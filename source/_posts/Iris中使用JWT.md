@@ -112,9 +112,9 @@ tokenString, err := token.SignedString([]byte("secret")) // 签名密钥
 在路由中添加 中间件验证
 ```go
 v1.PartyFunc("/login", func(login router.Party) {
-			login.Post("/user_login", controller.Login)
-			login.Post("/user_reg", controller.Register)
-		})
+	login.Post("/user_login", controller.Login)
+	login.Post("/user_reg", controller.Register)
+})
 v1.Use(middleware.JwtHandler().Serve)
 ```
 JWT 自带验证方法，如果想再自行加入验证可以注册新的中间件，例如

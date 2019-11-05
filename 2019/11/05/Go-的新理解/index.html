@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Go Map | Tony</title>
+  <title>Go ==的新理解 | Tony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内部实现Map是基于散列表即Hash表来实现的，所以每次迭代Map的时候，Key和Value都是无序的。Map的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给散列函数，就可以索引到相应的桶了，进而找到对应的键值。 声明和初始化Map的创建有 make 函数 12&#x2F;&#x2F; 键类型为 string ， 值类型为 intdict := make(map[st">
+  <meta name="description" content="==操作是用来比较数据的值是否相等，有一些细节需要注意,首先就要对数据类型进行区分 Go 中的数据类型分为以下四类:  基本类型：整型、浮点数、字符串、布尔型和复数 聚合类型：数组和结构体 引用类型：切片、map、channel、指针 接口类型：error 等  ==操作最重要的前提就是：两个变量的数据类型必须相同注：  Go中没有隐式类型转换 Go可以通过type定义新的类型，但是新类型与底层类">
 <meta name="keywords" content="Go">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go Map">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;Go-Map&#x2F;index.html">
+<meta property="og:title" content="Go ==的新理解">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;05&#x2F;Go-%E7%9A%84%E6%96%B0%E7%90%86%E8%A7%A3&#x2F;index.html">
 <meta property="og:site_name" content="Tony">
-<meta property="og:description" content="内部实现Map是基于散列表即Hash表来实现的，所以每次迭代Map的时候，Key和Value都是无序的。Map的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给散列函数，就可以索引到相应的桶了，进而找到对应的键值。 声明和初始化Map的创建有 make 函数 12&#x2F;&#x2F; 键类型为 string ， 值类型为 intdict := make(map[st">
+<meta property="og:description" content="==操作是用来比较数据的值是否相等，有一些细节需要注意,首先就要对数据类型进行区分 Go 中的数据类型分为以下四类:  基本类型：整型、浮点数、字符串、布尔型和复数 聚合类型：数组和结构体 引用类型：切片、map、channel、指针 接口类型：error 等  ==操作最重要的前提就是：两个变量的数据类型必须相同注：  Go中没有隐式类型转换 Go可以通过type定义新的类型，但是新类型与底层类">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-29T09:17:43.692Z">
+<meta property="og:updated_time" content="2019-11-05T10:12:10.120Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
@@ -145,20 +145,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Go-Map" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Go-的新理解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Go Map
+      Go ==的新理解
     </h1>
   
 
         
-        <a href="/2019/10/29/Go-Map/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
+        <a href="/2019/11/05/Go-%E7%9A%84%E6%96%B0%E7%90%86%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2019-11-05T10:11:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
 </a>
         
       </header>
@@ -167,19 +167,44 @@
       
         
           
-            <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong>内部实现</strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
-<h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a><strong>声明和初始化</strong></h4><p><code>Map</code>的创建有 <code>make</code> 函数</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 键类型为 string ， 值类型为 int</span></span><br><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
-<p>使用<code>map字面量</code>方式创建和初始化map</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">"张三"</span>:<span class="number">23</span>,<span class="string">"李四"</span>:<span class="number">24</span>&#125;</span><br><span class="line"><span class="comment">// 空 map</span></span><br><span class="line">dict := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"><span class="comment">// nil map</span></span><br><span class="line"><span class="keyword">var</span> dict <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br></pre></td></tr></table></figure>
-<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a><strong>使用Map</strong></h4><p><code>Map</code>本质是一个指针，函数传递时，对map内部修改会影响原来的map</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">dict[<span class="string">"张三"</span>] = <span class="number">23</span> <span class="comment">// 如果 张三 存在则修改其值为 23 ，否则新增该键值对</span></span><br></pre></td></tr></table></figure>
+            <p><code>==</code>操作是用来比较数据的值是否相等，有一些细节需要注意,首先就要对数据类型进行区分</p>
+<p>Go 中的数据类型分为以下四类:</p>
+<ul>
+<li>基本类型：整型、浮点数、字符串、布尔型和复数</li>
+<li>聚合类型：数组和结构体</li>
+<li>引用类型：切片、map、channel、指针</li>
+<li>接口类型：error 等</li>
+</ul>
+<p><strong><code>==</code>操作最重要的前提就是：两个变量的数据类型必须相同</strong><br>注：</p>
+<ul>
+<li>Go中没有隐式类型转换</li>
+<li>Go可以通过<code>type</code>定义新的类型，但是新类型与底层类型不同，不能直接比较</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">type</span> <span class="keyword">int8</span> myint8</span><br><span class="line">    <span class="keyword">var</span> a <span class="keyword">int8</span></span><br><span class="line">    <span class="keyword">var</span> b myint8</span><br><span class="line">    <span class="comment">// 编译错误：invalid operation a == b (mismatched types int8 and myint8)</span></span><br><span class="line">    fmt.Println(a == b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述定义了底层为<code>int8</code>新的类型 <code>myint8</code>，但是<code>int8</code>和<code>myint8</code>并不是相同类型</p>
+<p>以下是不同数据类型中使用<code>==</code>需要注意的一些地方</p>
+<h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><p>浮点数的比较问题</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">float64</span> = <span class="number">0.1</span></span><br><span class="line"><span class="keyword">var</span> b <span class="keyword">float64</span> = <span class="number">0.2</span></span><br><span class="line"><span class="keyword">var</span> c <span class="keyword">float64</span> = <span class="number">0.3</span></span><br><span class="line">fmt.Println(a + b == c) <span class="comment">// false</span></span><br><span class="line">fmt.Println(a + b) <span class="comment">// 0.30000000000000004</span></span><br></pre></td></tr></table></figure>
+<p>在计算机中有些浮点数不能精确表示，浮点数运算结果会存在误差，所以在计算时尽量不要做浮点数比较。</p>
+<h3 id="聚合类型"><a href="#聚合类型" class="headerlink" title="聚合类型"></a>聚合类型</h3><p>在Go中，聚合类型只有结构体和数组两种类型，他们用<code>==</code>比较的时候是逐<code>字段/元素</code>比较的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意：数组的长度视为类型的一部分，长度不同的两个数组是不同的类型，不能直接比较。</span><br></pre></td></tr></table></figure>
+<p>数组的比较：依次比较各个元素的值，对每个元素类型在进行比较，只有所有元素都相等，那么这两个数组才是相等的<br>结构体比较：依次比较各个字段的值和类型，所有字段都相等，结构体才相等</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">a := [<span class="number">4</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">b := [<span class="number">4</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">c := [<span class="number">4</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">fmt.Println(a == b) <span class="comment">// true</span></span><br><span class="line">fmt.Println(a == c) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> A <span class="keyword">struct</span> &#123;</span><br><span class="line">    a <span class="keyword">int</span></span><br><span class="line">    b <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line">aa := A &#123; a : <span class="number">1</span>, b : <span class="string">"test1"</span> &#125;</span><br><span class="line">bb := A &#123; a : <span class="number">1</span>, b : <span class="string">"test1"</span> &#125;</span><br><span class="line">cc := A &#123; a : <span class="number">1</span>, b : <span class="string">"test2"</span> &#125;</span><br><span class="line">fmt.Println(aa == bb)<span class="comment">// true</span></span><br><span class="line">fmt.Println(aa == cc)<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
-<p>判断键值对是否存在</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">age,exists := dict[“李四”]</span><br><span class="line"><span class="comment">// age 是键的值，exists是该键是否存在的 boolean 类型的变量</span></span><br></pre></td></tr></table></figure>
-
-<p>删除Map中的键值对使用<code>delete</code>函数</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(dict,<span class="string">"张三"</span>)<span class="comment">// 第一个参数为要操作的 Map ，第二个是要删除的 Map 的键</span></span><br></pre></td></tr></table></figure>
+<h3 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h3><p>引用类型保存的是指向数据的地址，因此引用类型的比较就是比较两个变量地址指向的是否是同一个数据</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> A <span class="keyword">struct</span> &#123;</span><br><span class="line">    a <span class="keyword">int</span></span><br><span class="line">    b <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">aa := &amp;A &#123; a : <span class="number">1</span>, b : <span class="string">"test1"</span> &#125;</span><br><span class="line">bb := &amp;A &#123; a : <span class="number">1</span>, b : <span class="string">"test1"</span> &#125;</span><br><span class="line">cc := aa</span><br><span class="line">fmt.Println(aa == bb) <span class="comment">// false</span></span><br><span class="line">fmt.Println(aa == cc) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p><code>channel</code>也是如此</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ch1 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">ch2 := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">int</span>, <span class="number">1</span>)</span><br><span class="line">ch3 := ch1</span><br><span class="line"></span><br><span class="line">fmt.Println(ch1 == ch2) <span class="comment">// false</span></span><br><span class="line">fmt.Println(ch1 == ch3) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>但是<code>切片</code>和<code>map</code>是特殊的两个数据类型,他们都只能和<code>nil</code>比较。如果两个切片或者两个map比较，会直接编译报错<br>原因：因为切片是引用类型，它可以间接的指向自己。例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a := []<span class="keyword">interface</span>&#123;&#125;&#123; <span class="number">1</span>, <span class="number">2.0</span> &#125;</span><br><span class="line">a[<span class="number">1</span>] = a</span><br><span class="line">fmt.Println(a)</span><br><span class="line"></span><br><span class="line"><span class="comment">// !!!</span></span><br><span class="line"><span class="comment">// runtime: goroutine stack exceeds 1000000000-byte limit</span></span><br><span class="line"><span class="comment">// fatal error: stack overflow</span></span><br></pre></td></tr></table></figure>
+<p>上述代码将切片<code>a</code>赋值给<code>a[1]</code>导致递归引用，<code>fmt.Println(a)</code>直接爆栈。切片类型还拥有长度和容量属性，如果切片的长度相同，每个元素也一样，但是他们的容量不同，是否算是相等的切片，容易争议。</p>
+<p><code>map</code>的值类型可能是不可比较类型，比如切片，所以<code>map</code>类型也不能比较</p>
+<h3 id="接口类型"><a href="#接口类型" class="headerlink" title="接口类型"></a>接口类型</h3><p>接口类型的值称作接口值。一个接口值由两部分组成：动态类型和动态值，只有动态类型和动态值都相等，这两个变量才算相等</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">interface</span>&#123;&#125; = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> b <span class="keyword">interface</span>&#123;&#125; = <span class="number">2</span></span><br><span class="line"><span class="keyword">var</span> c <span class="keyword">interface</span>&#123;&#125; = <span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> d <span class="keyword">interface</span>&#123;&#125; = <span class="number">1.0</span></span><br><span class="line">fmt.Println(a == b) <span class="comment">// false</span></span><br><span class="line">fmt.Println(a == c) <span class="comment">// true</span></span><br><span class="line">fmt.Println(a == d) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>a和b动态类型相同（都是int），动态值也相同（都是1，基本类型比较），故两者相等。<br>a和c动态类型相同，动态值不等（分别为1和2，基本类型比较），故两者不等。<br>a和d动态类型不同，a为int，d为float64，故两者不等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意：如果接口的动态值不可比较，强行比较会编译错误</span><br></pre></td></tr></table></figure>
+<p>如动态值是切片类型</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="keyword">interface</span>&#123;&#125; = []<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b <span class="keyword">interface</span>&#123;&#125; = []<span class="keyword">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line"><span class="comment">// panic: runtime error: comparing uncomparable type []int</span></span><br><span class="line">fmt.Println(a == b)</span><br></pre></td></tr></table></figure>
           
         
     </div>
@@ -258,7 +283,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/29/Go-Map/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/11/05/Go-%E7%9A%84%E6%96%B0%E7%90%86%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -272,18 +297,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/10/29/Hash%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Hash表
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Go 数组和切片</div>
+    <a href="/2019/10/31/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BAgithub-Pages%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用hexo搭建github Pages个人博客</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -322,7 +338,7 @@
 <script src="https://billts.site/js/gitment.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "Go Map",
+  id: "Go ==的新理解",
   owner: 'tony2051',
   repo: 'tony2051.github.io',
   oauth: {

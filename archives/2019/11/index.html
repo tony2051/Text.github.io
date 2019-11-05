@@ -6,17 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Go Map | Tony</title>
+  <title>Archives: 2019/11 | Tony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="内部实现Map是基于散列表即Hash表来实现的，所以每次迭代Map的时候，Key和Value都是无序的。Map的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给散列函数，就可以索引到相应的桶了，进而找到对应的键值。 声明和初始化Map的创建有 make 函数 12&#x2F;&#x2F; 键类型为 string ， 值类型为 intdict := make(map[st">
-<meta name="keywords" content="Go">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Go Map">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;Go-Map&#x2F;index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Tony">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;11&#x2F;index.html">
 <meta property="og:site_name" content="Tony">
-<meta property="og:description" content="内部实现Map是基于散列表即Hash表来实现的，所以每次迭代Map的时候，Key和Value都是无序的。Map的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给散列函数，就可以索引到相应的桶了，进而找到对应的键值。 声明和初始化Map的创建有 make 函数 12&#x2F;&#x2F; 键类型为 string ， 值类型为 intdict := make(map[st">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-29T09:17:43.692Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tony" type="application/atom+xml">
@@ -145,47 +141,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Go-Map" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Go Map
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/11/05/Go-%E7%9A%84%E6%96%B0%E7%90%86%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2019-11-05T10:11:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/11/05/Go-%E7%9A%84%E6%96%B0%E7%90%86%E8%A7%A3/">Go ==的新理解</a>
     </h1>
   
 
-        
-        <a href="/2019/10/29/Go-Map/" class="archive-article-date">
-  	<time datetime="2019-10-29T01:44:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
+        <div class="article-info info-on-right">
           
-            <h4 id="内部实现"><a href="#内部实现" class="headerlink" title="内部实现"></a><strong>内部实现</strong></h4><p><code>Map</code>是基于<code>散列表即Hash表</code>来实现的，所以每次迭代Map的时候，Key和Value都是无序的。<br><em><code>Map</code>的散列表包含一组桶，每次存储和查找键值对的时候，都要先选择一个桶。如何选择桶呢？就是把指定的键传给<code>散列函数</code>，就可以索引到相应的桶了，进而找到对应的键值。</em></p>
-<h4 id="声明和初始化"><a href="#声明和初始化" class="headerlink" title="声明和初始化"></a><strong>声明和初始化</strong></h4><p><code>Map</code>的创建有 <code>make</code> 函数</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 键类型为 string ， 值类型为 int</span></span><br><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br></pre></td></tr></table></figure>
-<p>使用<code>map字面量</code>方式创建和初始化map</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;<span class="string">"张三"</span>:<span class="number">23</span>,<span class="string">"李四"</span>:<span class="number">24</span>&#125;</span><br><span class="line"><span class="comment">// 空 map</span></span><br><span class="line">dict := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;&#125;</span><br><span class="line"><span class="comment">// nil map</span></span><br><span class="line"><span class="keyword">var</span> dict <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span></span><br></pre></td></tr></table></figure>
-<h4 id="使用Map"><a href="#使用Map" class="headerlink" title="使用Map"></a><strong>使用Map</strong></h4><p><code>Map</code>本质是一个指针，函数传递时，对map内部修改会影响原来的map</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">dict[<span class="string">"张三"</span>] = <span class="number">23</span> <span class="comment">// 如果 张三 存在则修改其值为 23 ，否则新增该键值对</span></span><br></pre></td></tr></table></figure>
-
-<p>判断键值对是否存在</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dict := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>)</span><br><span class="line">age,exists := dict[“李四”]</span><br><span class="line"><span class="comment">// age 是键的值，exists是该键是否存在的 boolean 类型的变量</span></span><br></pre></td></tr></table></figure>
-
-<p>删除Map中的键值对使用<code>delete</code>函数</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(dict,<span class="string">"张三"</span>)<span class="comment">// 第一个参数为要操作的 Map ，第二个是要删除的 Map 的键</span></span><br></pre></td></tr></table></figure>
-          
-        
-    </div>
-    <div class="article-info article-info-index">
-      
-      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,7 +182,7 @@
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -210,129 +195,17 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/29/Go-Map/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2019/10/29/Hash%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Hash表
-        
-      </div>
-    </a>
   
   
-    <a href="/2019/10/29/Go%E6%95%B0%E7%BB%84%E5%92%8C%E5%88%87%E7%89%87/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Go 数组和切片</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-<script src="https://billts.site/js/gitment.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "Go Map",
-  owner: 'tony2051',
-  repo: 'tony2051.github.io',
-  oauth: {
-    client_id: '913a95b9e9c505507562',
-    client_secret: '41798a83556746a8745397db5e29b0787103d234',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
-  
+    
 
 
           </div>
@@ -355,8 +228,8 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
